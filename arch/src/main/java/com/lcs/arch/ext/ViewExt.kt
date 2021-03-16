@@ -1,6 +1,7 @@
 package com.lcs.arch.ext
 
 import android.view.View
+import android.widget.EditText
 
 /**
  * @ClassName: ViewExt
@@ -28,4 +29,11 @@ fun View.gone() {
  */
 fun View.hide() {
     this.visibility = View.INVISIBLE
+}
+
+/**
+ * 返回[EditText]的[EditText.getText]，并转为String
+ */
+fun EditText.textString(): String {
+    return this.text.toString()
 }
