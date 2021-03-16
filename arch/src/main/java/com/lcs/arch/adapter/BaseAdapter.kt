@@ -13,23 +13,34 @@ import androidx.recyclerview.widget.RecyclerView
  * @Date: 21-3-6 下午11:13
  * @Description: BaseAdapter
  */
-abstract class BaseAdapter<T, UI : ViewDataBinding> :
-    RecyclerView.Adapter<BaseAdapter.ViewHolder>() {
+abstract class BaseAdapter<T, UI : ViewDataBinding>(
+    data: MutableList<T>? = null
+) : RecyclerView.Adapter<BaseAdapter.ViewHolder>() {
 
+    /**
+     * 上下文环境
+     */
     lateinit var context: Context
         private set
 
     /**
      * 数据列表，只支持一种类型的数据
      */
-    protected val data = mutableListOf<T>()
+    open val data = data ?: mutableListOf()
 
     /**
      * 布局文件的id，在子类中实现（可以在构造函数中重写）
      */
     abstract val layoutId: Int
 
-    private var onItemClick: OnItemClick<T>? = null
+    /**
+     * item点击监听器
+     */
+    private var onItemClickListener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: UI = DataBindingUtil.inflate(
@@ -38,7 +49,13 @@ abstract class BaseAdapter<T, UI : ViewDataBinding> :
             parent,
             false
         )
-        return ViewHolder(binding)
+        val viewHolder = ViewHolder(binding)
+        onItemClickListener?.let {
+            viewHolder.itemView.setOnClickListener { v ->
+                it.onItemClick<T>(this, v, viewHolder.adapterPosition)
+            }
+        }
+        return viewHolder
     }
 
     open class ViewHolder(open val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
