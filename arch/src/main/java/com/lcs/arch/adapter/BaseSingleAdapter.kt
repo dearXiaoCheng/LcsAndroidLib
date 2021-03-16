@@ -1,5 +1,6 @@
 package com.lcs.arch.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
  */
 abstract class BaseSingleAdapter<T, UI : ViewDataBinding> :
     RecyclerView.Adapter<BaseSingleAdapter.ViewHolder>() {
+
+    lateinit var context: Context
+        private set
 
     var data: T? = null
         private set(value) {
@@ -35,6 +39,7 @@ abstract class BaseSingleAdapter<T, UI : ViewDataBinding> :
             parent,
             false
         )
+        context = parent.context
         return ViewHolder(binding)
     }
 

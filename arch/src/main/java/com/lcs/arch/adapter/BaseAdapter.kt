@@ -1,5 +1,6 @@
 package com.lcs.arch.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
  */
 abstract class BaseAdapter<T, UI : ViewDataBinding> :
     RecyclerView.Adapter<BaseAdapter.ViewHolder>() {
+
+    lateinit var context: Context
+        private set
 
     /**
      * 数据列表，只支持一种类型的数据
