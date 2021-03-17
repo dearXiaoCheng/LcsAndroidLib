@@ -42,6 +42,11 @@ abstract class BaseAdapter<T, UI : ViewDataBinding>(
         this.onItemClickListener = onItemClickListener
     }
 
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        context = recyclerView.context
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: UI = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
