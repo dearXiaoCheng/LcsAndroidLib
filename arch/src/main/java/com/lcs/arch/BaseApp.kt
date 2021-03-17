@@ -1,6 +1,7 @@
 package com.lcs.arch
 
 import android.app.Application
+import android.content.Context
 
 /**
  * @ClassName: BaseApp
@@ -10,8 +11,19 @@ import android.app.Application
  */
 abstract class BaseApp : Application() {
 
+    companion object {
+        var mAppContext: Context? = null
+            get() {
+                if (field == null) {
+                    throw NullPointerException("请继承BaseApp")
+                }
+                return field!!
+            }
+    }
+
     override fun onCreate() {
         super.onCreate()
+        mAppContext = this
         initApp()
     }
 
