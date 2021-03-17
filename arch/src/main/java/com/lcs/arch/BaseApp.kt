@@ -19,6 +19,7 @@ abstract class BaseApp : Application() {
                 }
                 return field!!
             }
+            private set
     }
 
     override fun onCreate() {
