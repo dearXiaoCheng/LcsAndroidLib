@@ -38,7 +38,7 @@ abstract class BaseAdapter<T, UI : ViewDataBinding>(
      */
     private var onItemClickListener: OnItemClickListener? = null
 
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
         this.onItemClickListener = onItemClickListener
     }
 

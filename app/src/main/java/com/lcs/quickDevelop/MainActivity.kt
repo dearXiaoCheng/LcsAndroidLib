@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val adapter = object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.activity_main) {
             override fun convert(holder: BaseViewHolder, item: String) {
-
             }
         }
+        adapter.setOnItemClickListener { adapter, view, position -> }
 
         val adapter2 = object : BaseAdapter<String, ViewDataBinding>() {
             override val layoutId: Int
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
         adapter2.setOnItemClickListener(object : OnItemClickListener {
 
             override fun <T> onItemClick(adapter: BaseAdapter<*, *>, view: View, position: Int) {

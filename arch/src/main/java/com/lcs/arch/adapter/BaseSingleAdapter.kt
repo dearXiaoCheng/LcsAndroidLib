@@ -30,7 +30,10 @@ abstract class BaseSingleAdapter<T, UI : ViewDataBinding> :
      */
     abstract val layoutId: Int
 
-    private var onItemClick: OnItemClick<T>? = null
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        context = recyclerView.context
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: UI = DataBindingUtil.inflate(
@@ -39,7 +42,6 @@ abstract class BaseSingleAdapter<T, UI : ViewDataBinding> :
             parent,
             false
         )
-        context = parent.context
         return ViewHolder(binding)
     }
 
@@ -47,7 +49,7 @@ abstract class BaseSingleAdapter<T, UI : ViewDataBinding> :
 
     @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        onBindData(holder.binding as UI, data)
+        onBindData(holder.binding as UI, data, position)
         holder.binding.executePendingBindings()
     }
 
@@ -59,7 +61,7 @@ abstract class BaseSingleAdapter<T, UI : ViewDataBinding> :
     /**
      * 显示数据时使用。通过[binding]设置布局中对应的变量[item]更新数据。
      */
-    abstract fun onBindData(binding: UI, item: T?)
+    abstract fun onBindData(binding: UI, item: T?, position: Int)
 
 
 }
