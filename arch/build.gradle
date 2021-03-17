@@ -59,6 +59,7 @@ dependencies {
     // LiveData
     api "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
 
+    implementation 'com.blankj:utilcode:+'
 
 
     // 基础依赖包，必须要依赖
