@@ -38,8 +38,17 @@ abstract class BaseAdapter<T, UI : ViewDataBinding>(
      */
     private var onItemClickListener: OnItemClickListener? = null
 
+    /**
+     * item长按监听器
+     */
+    private var onItemLongClickListener: OnItemLongClickListener? = null
+
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
         this.onItemClickListener = onItemClickListener
+    }
+
+    fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener?) {
+        this.onItemLongClickListener = onItemLongClickListener
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -57,7 +66,12 @@ abstract class BaseAdapter<T, UI : ViewDataBinding>(
         val viewHolder = ViewHolder(binding)
         onItemClickListener?.let {
             viewHolder.itemView.setOnClickListener { v ->
-                it.onItemClick<T>(this, v, viewHolder.adapterPosition)
+                it.onItemClick(this, v, viewHolder.adapterPosition)
+            }
+        }
+        onItemLongClickListener?.let {
+            viewHolder.itemView.setOnLongClickListener { v ->
+                it.onItemLongClick(this, v, viewHolder.adapterPosition)
             }
         }
         return viewHolder

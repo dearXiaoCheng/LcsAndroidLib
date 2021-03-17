@@ -9,5 +9,9 @@ import android.view.View
  * @Date: 2021/3/12 下午9:57
  */
 interface OnItemClickListener {
-    fun <T> onItemClick(adapter: BaseAdapter<*, *>, view: View, position: Int)
+    fun onItemClick(adapter: BaseAdapter<*, *>, view: View, position: Int)
+}
+
+interface OnItemLongClickListener {
+    fun onItemLongClick(adapter: BaseAdapter<*, *>, view: View, position: Int): Boolean
 }
