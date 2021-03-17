@@ -1,4 +1,4 @@
-package com.lcs.arch.adapter
+package com.lcs.launcher
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -20,7 +20,7 @@ abstract class BaseSingleAdapter<T, UI : ViewDataBinding> :
         private set
 
     var data: T? = null
-        private set(value) {
+        set(value) {
             field = value
             notifyItemChanged(0)
         }
@@ -42,8 +42,12 @@ abstract class BaseSingleAdapter<T, UI : ViewDataBinding> :
             parent,
             false
         )
-        return ViewHolder(binding)
+        val viewHolder = ViewHolder(binding)
+        onItemViewHolderCreated(viewHolder, viewType)
+        return viewHolder
     }
+
+    protected open fun onItemViewHolderCreated(viewHolder: ViewHolder, viewType: Int) {}
 
     open class ViewHolder(open val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
 
