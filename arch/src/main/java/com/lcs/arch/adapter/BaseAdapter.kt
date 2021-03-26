@@ -2,6 +2,7 @@ package com.lcs.arch.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -34,21 +35,21 @@ abstract class BaseAdapter<T, UI : ViewDataBinding>(
     abstract val layoutId: Int
 
     /**
-     * item点击监听器
+     * item点击事件
      */
-    private var onItemClickListener: OnItemClickListener? = null
+    private var onItemClick: ((view: View, position: Int) -> Unit)? = null
 
     /**
-     * item长按监听器
+     * item长按事件
      */
-    private var onItemLongClickListener: OnItemLongClickListener? = null
+    private var onItemLongClick: ((view: View, position: Int) -> Boolean)? = null
 
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
-        this.onItemClickListener = onItemClickListener
+    fun setOnItemClick(click: ((view: View, position: Int) -> Unit)?) {
+        this.onItemClick = click
     }
 
-    fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener?) {
-        this.onItemLongClickListener = onItemLongClickListener
+    fun setOnItemLongClickListener(longClick: ((view: View, position: Int) -> Boolean)?) {
+        this.onItemLongClick = longClick
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -64,14 +65,14 @@ abstract class BaseAdapter<T, UI : ViewDataBinding>(
             false
         )
         val viewHolder = ViewHolder(binding)
-        onItemClickListener?.let {
+        onItemClick?.let {
             viewHolder.itemView.setOnClickListener { v ->
-                it.onItemClick(this, v, viewHolder.adapterPosition)
+                it.invoke(v, viewHolder.adapterPosition)
             }
         }
-        onItemLongClickListener?.let {
+        onItemLongClick?.let {
             viewHolder.itemView.setOnLongClickListener { v ->
-                it.onItemLongClick(this, v, viewHolder.adapterPosition)
+                it.invoke(v, viewHolder.adapterPosition)
             }
         }
         return viewHolder
